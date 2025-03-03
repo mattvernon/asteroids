@@ -31,6 +31,7 @@ const SOUNDS = {
     gameOver: new Audio("sounds/gameOver.wav"),
     gameStart: new Audio("sounds/gameStart.wav"),
     music: new Audio("sounds/music.mp3"),
+    pauseMusic: new Audio("sounds/pause-music.mp3"),  // Add pause music
     health: new Audio("sounds/health.wav")
 };
 
@@ -41,8 +42,13 @@ SOUNDS.loseLife.volume = 0.5;
 SOUNDS.warning.volume = 0.3;
 SOUNDS.gameOver.volume = 0.5;
 SOUNDS.gameStart.volume = 0.5;
-SOUNDS.music.volume = 0.3;  // Keep background music quieter
-SOUNDS.music.loop = true;   // Make music loop continuously
+SOUNDS.music.volume = 0.3;
+SOUNDS.pauseMusic.volume = 0.2;  // Keep pause music a bit quieter
+SOUNDS.health.volume = 0.4;
+
+// Set both music tracks to loop
+SOUNDS.music.loop = true;
+SOUNDS.pauseMusic.loop = true;
 
 // Get the canvas element and set it to fullscreen
 const canvas = document.getElementById("gameCanvas");
@@ -526,13 +532,14 @@ function togglePause() {
         isPaused = true;
         resetControls();
         document.getElementById('pauseScreen').style.display = 'flex';
-        handleBackgroundMusic(false, true);  // Pause music
+        handleBackgroundMusic(false, true);  // Switch to pause music
     } else {
         // Unpause the game
         isPaused = false;
         document.getElementById('pauseScreen').style.display = 'none';
-        SOUNDS.music.play();  // Resume music from where it was
-        requestAnimationFrame(update);  // Restart the game loop
+        SOUNDS.pauseMusic.pause();  // Stop pause music
+        SOUNDS.music.play();  // Resume game music from where it was
+        requestAnimationFrame(update);
     }
 }
 
@@ -643,13 +650,17 @@ function checkShipCollision() {
 // Add function to handle background music
 function handleBackgroundMusic(start = true, pause = false) {
     if (start) {
-        SOUNDS.music.currentTime = 0;  // Only reset to beginning when starting new game
+        SOUNDS.music.currentTime = 0;
+        SOUNDS.pauseMusic.pause();  // Make sure pause music is stopped
         SOUNDS.music.play().catch(error => console.log("Music play failed:", error));
     } else if (pause) {
-        SOUNDS.music.pause();  // Just pause the music
+        SOUNDS.music.pause();  // Pause game music
+        SOUNDS.pauseMusic.currentTime = 0;  // Reset pause music to start
+        SOUNDS.pauseMusic.play().catch(error => console.log("Pause music play failed:", error));
     } else {
         SOUNDS.music.pause();
-        SOUNDS.music.currentTime = 0;  // Stop and reset (for game over)
+        SOUNDS.pauseMusic.pause();
+        SOUNDS.music.currentTime = 0;
     }
 }
 
