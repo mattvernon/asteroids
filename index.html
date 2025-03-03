@@ -108,6 +108,57 @@
             filter: drop-shadow(0 0 20px #00ffff);
             animation: glow 2s ease-in-out infinite;
         }
+        #soundControls {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            z-index: 100;
+        }
+        .soundButton {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .soundButton svg {
+            width: 30px;
+            height: 30px;
+            fill: #00ffff;
+            filter: drop-shadow(0 0 5px #00ffff);
+        }
+        .soundButton:hover svg {
+            fill: #ff00ff;
+            filter: drop-shadow(0 0 8px #ff00ff);
+        }
+        .soundButton.muted svg {
+            fill: #ff0000;
+            filter: drop-shadow(0 0 5px #ff0000);
+        }
+        .soundButton span {
+            font-family: 'Righteous', cursive;
+            font-size: 20px;
+            color: #00ffff;
+            text-shadow: 0 0 10px #00ffff;
+        }
+        .soundButton.muted span {
+            color: #ff0000;
+            text-shadow: 0 0 10px #ff0000;
+        }
+        .soundButton:hover span {
+            color: #ff00ff;
+            text-shadow: 0 0 10px #ff00ff;
+        }
+        .soundButton:focus {
+            outline: none;
+        }
+        
+        #startButton:focus, #restartButton:focus {
+            outline: none;  /* Remove focus outline */
+        }
     </style>
 </head>
 <body>
@@ -125,6 +176,14 @@
         <p style="color: #00ffff; font-family: 'Righteous', cursive; font-size: 24px;">Press ENTER to continue</p>
     </div>
     <div id="lives">LIVES: 3</div>
+    <div id="soundControls">
+        <button class="soundButton" id="soundToggle" title="Toggle Sound">
+            <svg viewBox="0 0 24 24">
+                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
+            </svg>
+            <span>SOUND ON</span>
+        </button>
+    </div>
     <canvas id="gameCanvas"></canvas>
     <script src="game.js"></script>
 </body>

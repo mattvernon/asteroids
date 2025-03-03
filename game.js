@@ -647,15 +647,29 @@ function checkShipCollision() {
     }
 }
 
-// Add function to handle background music
+// Simplify sound state to a single boolean
+let soundEnabled = true;
+
+// Update sound handling
+function playSound(sound) {
+    if (soundEnabled && SOUNDS[sound]) {
+        SOUNDS[sound].play().catch(error => {
+            console.log(`Sound play failed: ${sound}`, error);
+        });
+    }
+}
+
+// Update handleBackgroundMusic function
 function handleBackgroundMusic(start = true, pause = false) {
+    if (!soundEnabled) return;
+    
     if (start) {
         SOUNDS.music.currentTime = 0;
-        SOUNDS.pauseMusic.pause();  // Make sure pause music is stopped
+        SOUNDS.pauseMusic.pause();
         SOUNDS.music.play().catch(error => console.log("Music play failed:", error));
     } else if (pause) {
-        SOUNDS.music.pause();  // Pause game music
-        SOUNDS.pauseMusic.currentTime = 0;  // Reset pause music to start
+        SOUNDS.music.pause();
+        SOUNDS.pauseMusic.currentTime = 0;
         SOUNDS.pauseMusic.play().catch(error => console.log("Pause music play failed:", error));
     } else {
         SOUNDS.music.pause();
@@ -663,6 +677,34 @@ function handleBackgroundMusic(start = true, pause = false) {
         SOUNDS.music.currentTime = 0;
     }
 }
+
+// Update sound control handler
+document.getElementById('soundToggle').addEventListener('click', function(e) {
+    e.preventDefault();
+    this.blur();
+    soundEnabled = !soundEnabled;
+    this.classList.toggle('muted');
+    
+    // Update sound label
+    this.querySelector('span').textContent = soundEnabled ? 'SOUND ON' : 'SOUND OFF';
+    
+    if (!soundEnabled) {
+        // Stop all sounds
+        Object.values(SOUNDS).forEach(sound => {
+            sound.pause();
+            if (sound.currentTime) {
+                sound.currentTime = 0;
+            }
+        });
+    } else if (gameStarted) {
+        // Resume appropriate music
+        if (isPaused) {
+            SOUNDS.pauseMusic.play();
+        } else {
+            SOUNDS.music.play();
+        }
+    }
+});
 
 // Add game over function
 function gameOver() {
@@ -1004,14 +1046,43 @@ function update() {
     requestAnimationFrame(update);
 }
 
-// Update the sound utility function
-function playSound(sound) {
-    if (SOUND_ON && SOUNDS[sound]) {
-        SOUNDS[sound].play().catch(error => {
-            console.log(`Sound play failed: ${sound}`, error);
-        });
+// Update start button handler
+document.getElementById('startButton').addEventListener('click', (e) => {
+    e.preventDefault();  // Prevent default button behavior
+    e.target.blur();  // Remove focus
+    document.getElementById('welcomeScreen').style.display = 'none';
+    gameStarted = true;
+    
+    loadSounds();
+    try {
+        playSound('gameStart');
+        handleBackgroundMusic(true);
+    } catch (error) {
+        console.log("Sound initialization failed:", error);
     }
-}
+    
+    resetGame();
+    createStars();
+    update();
+});
+
+// Update restart button handler
+document.getElementById('restartButton').addEventListener('click', (e) => {
+    e.preventDefault();  // Prevent default button behavior
+    e.target.blur();  // Remove focus
+    document.getElementById('gameOverScreen').style.display = 'none';
+    gameStarted = true;
+    
+    try {
+        playSound('gameStart');
+        handleBackgroundMusic(true);
+    } catch (error) {
+        console.log("Sound initialization failed:", error);
+    }
+    
+    resetGame();
+    update();
+});
 
 // Add sound loading utility
 function loadSounds() {
@@ -1022,38 +1093,4 @@ function loadSounds() {
             SOUNDS[key] = new Audio();
         }
     });
-}
-
-// Add start button handler
-document.getElementById('startButton').addEventListener('click', () => {
-    document.getElementById('welcomeScreen').style.display = 'none';
-    gameStarted = true;
-    
-    loadSounds();
-    try {
-        playSound('gameStart');
-        handleBackgroundMusic(true);  // Start music from beginning
-    } catch (error) {
-        console.log("Sound initialization failed:", error);
-    }
-    
-    resetGame();
-    createStars();
-    update();
-});
-
-// Add restart button handler
-document.getElementById('restartButton').addEventListener('click', () => {
-    document.getElementById('gameOverScreen').style.display = 'none';
-    gameStarted = true;
-    
-    try {
-        playSound('gameStart');
-        handleBackgroundMusic(true);  // Start music from beginning
-    } catch (error) {
-        console.log("Sound initialization failed:", error);
-    }
-    
-    resetGame();
-    update();
-}); 
+} 
