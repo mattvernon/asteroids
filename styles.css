@@ -1,0 +1,21 @@
+#lives {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-family: 'Righteous', cursive;
+    font-size: 24px;
+    color: #ff00ff;
+    text-shadow: 0 0 10px #ff00ff;
+    z-index: 1001;
+}
+
+#points {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-family: 'Righteous', cursive;
+    font-size: 24px;
+    color: #ff00ff;
+    text-shadow: 0 0 10px #ff00ff;
+    z-index: 1001;
+} 

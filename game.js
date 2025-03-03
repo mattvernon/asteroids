@@ -1095,4 +1095,14 @@ function loadSounds() {
             SOUNDS[key] = new Audio();
         }
     });
+}
+
+function initializeGame() {
+    // Remove the score display
+    const scoreElement = document.getElementById('points');
+    if (scoreElement) {
+        scoreElement.remove();
+    }
+    
+    // ... existing code ...
 } 
