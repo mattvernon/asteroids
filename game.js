@@ -8,9 +8,11 @@ const ASTEROID_NUM = 8;
 const ASTEROID_SIZE = 100;
 const ASTEROID_SPEED = 70;
 const ASTEROID_VERTICES = 10;
-const LASER_SPEED = 500;
+const LASER_SPEED = 700;
 const LASER_MAX = 10;
 const LASER_DIST = 0.6;
+const LASER_SIZE = 4;
+const LASER_FIRE_RATE = 100;
 const ASTEROID_SPIN = 0.01;
 const MIN_ASTEROID_COUNT = 5;  // Minimum asteroids on screen
 
@@ -185,7 +187,7 @@ function shootLaser() {
         playSound('laser');
         
         ship.canShoot = false;
-        setTimeout(() => ship.canShoot = true, 150);
+        setTimeout(() => ship.canShoot = true, LASER_FIRE_RATE);
     }
 }
 
@@ -428,16 +430,39 @@ function drawAsteroids() {
 // Draw lasers
 function drawLasers() {
     lasers.forEach(laser => {
-        ctx.save();  // Save state for each laser
+        ctx.save();
         
-        ctx.shadowBlur = 10;
-        ctx.shadowColor = '#00ff00';
-        ctx.fillStyle = '#00ff00';
+        // Create gradient for fiery effect
+        const gradient = ctx.createRadialGradient(
+            laser.x, laser.y, 0,
+            laser.x, laser.y, LASER_SIZE * 2
+        );
+        gradient.addColorStop(0, '#fff');     // White core
+        gradient.addColorStop(0.3, '#0f0');   // Green middle
+        gradient.addColorStop(1, 'rgba(0, 255, 0, 0)'); // Transparent edge
+        
+        // Glow effect
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = '#0f0';
+        
+        // Main laser body
+        ctx.fillStyle = gradient;
         ctx.beginPath();
-        ctx.arc(laser.x, laser.y, 2, 0, Math.PI * 2, false);
+        ctx.arc(laser.x, laser.y, LASER_SIZE, 0, Math.PI * 2, false);
         ctx.fill();
         
-        ctx.restore();  // Restore state after each laser
+        // Additional particle trail
+        ctx.fillStyle = 'rgba(0, 255, 0, 0.3)';
+        ctx.beginPath();
+        ctx.arc(
+            laser.x - laser.xv / FPS * 0.5, 
+            laser.y - laser.yv / FPS * 0.5, 
+            LASER_SIZE * 0.7, 
+            0, Math.PI * 2, false
+        );
+        ctx.fill();
+        
+        ctx.restore();
     });
 }
 
@@ -518,22 +543,26 @@ document.addEventListener("keydown", (ev) => {
     }
 });
 
-// Update keyDown function to check for pause
+// Update keyDown function to support WASD
 function keyDown(/** @type {KeyboardEvent} */ ev) {
-    if (!gameStarted || isPaused) return;  // Don't process keys if paused
+    if (!gameStarted || isPaused) return;
     
-    switch(ev.key) {
-        case "ArrowLeft":
+    switch(ev.key.toLowerCase()) {  // Convert to lowercase to handle both cases
+        case "arrowleft":
+        case "a":
             ship.rotation = TURN_SPEED / 180 * Math.PI / FPS;
             break;
-        case "ArrowRight":
+        case "arrowright":
+        case "d":
             ship.rotation = -TURN_SPEED / 180 * Math.PI / FPS;
             break;
-        case "ArrowUp":
+        case "arrowup":
+        case "w":
             ship.thrusting = true;
             ship.reverse = false;
             break;
-        case "ArrowDown":
+        case "arrowdown":
+        case "s":
             ship.thrusting = true;
             ship.reverse = true;
             break;
@@ -543,17 +572,21 @@ function keyDown(/** @type {KeyboardEvent} */ ev) {
     }
 }
 
-// Handle keyup
+// Update keyUp function to support WASD
 function keyUp(/** @type {KeyboardEvent} */ ev) {
     if (!gameStarted) return;
     
-    switch(ev.key) {
-        case "ArrowLeft":
-        case "ArrowRight":
+    switch(ev.key.toLowerCase()) {  // Convert to lowercase to handle both cases
+        case "arrowleft":
+        case "a":
+        case "arrowright":
+        case "d":
             ship.rotation = 0;
             break;
-        case "ArrowUp":
-        case "ArrowDown":
+        case "arrowup":
+        case "w":
+        case "arrowdown":
+        case "s":
             ship.thrusting = false;
             break;
     }
