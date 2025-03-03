@@ -17,9 +17,9 @@ const ASTEROID_SPIN = 0.01;
 const MIN_ASTEROID_COUNT = 5;  // Minimum asteroids on screen
 
 // Score constants
-const POINTS_LARGE = 20;
-const POINTS_MEDIUM = 50;
-const POINTS_SMALL = 100;
+const POINTS_LARGE = 20;    // Points for largest asteroids
+const POINTS_MEDIUM = 50;   // Points for medium asteroids
+const POINTS_SMALL = 100;   // Points for smallest asteroids
 
 // Add sound effects
 const SOUND_ON = true;
@@ -807,9 +807,11 @@ function drawHealthPickups() {
 // Update the asteroid hit handler
 function handleAsteroidHit(asteroid) {
     let points;
-    if (asteroid.radius > ASTEROID_SIZE / 6) {
+    if (asteroid.radius === ASTEROID_SIZE / 2) {  // Large asteroid
+        points = POINTS_LARGE;
+    } else if (asteroid.radius === ASTEROID_SIZE / 4) {  // Medium asteroid
         points = POINTS_MEDIUM;
-    } else {
+    } else {  // Small asteroid
         points = POINTS_SMALL;
     }
     
