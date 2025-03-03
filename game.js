@@ -507,7 +507,13 @@ function drawStars() {
 
 // Draw score
 function drawScore() {
-    document.getElementById('score').textContent = `SCORE: ${score}`;
+    ctx.textAlign = "right";
+    ctx.textBaseline = "middle";
+    ctx.fillStyle = "#00ffff";
+    ctx.font = "bold 40px Righteous";
+    ctx.shadowBlur = 10;
+    ctx.shadowColor = "#00ffff";
+    ctx.fillText(score, canvas.width - 20, 40);
 }
 
 // Add function to reset controls
@@ -721,7 +727,6 @@ function resetGame() {
     textPopups = [];
     
     document.getElementById('lives').textContent = `LIVES: ${lives}`;
-    document.getElementById('score').textContent = `SCORE: 0`;
     resetShip();
     createAsteroidBelt();
 }
