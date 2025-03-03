@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Asteroids</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="manifest" href="site.webmanifest">
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        canvas {
+            background: #000033;
+            display: block;
+        }
+        #welcomeScreen, #gameOverScreen {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 51, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 50px;
+            z-index: 1000;
+        }
+        #gameOverScreen {
+            display: none;
+        }
+        #gameTitle, #gameOverTitle {
+            font-family: 'Righteous', cursive;
+            font-size: 100px;
+            color: #00ffff;
+            text-shadow: 0 0 20px #00ffff;
+            animation: glow 2s ease-in-out infinite;
+        }
+        #finalScore {
+            font-family: 'Righteous', cursive;
+            font-size: 50px;
+            color: #ff00ff;
+            text-shadow: 0 0 10px #ff00ff;
+        }
+        #startButton, #restartButton {
+            font-family: 'Righteous', cursive;
+            font-size: 30px;
+            color: #ff00ff;
+            background: transparent;
+            border: 3px solid #ff00ff;
+            padding: 15px 50px;
+            border-radius: 50px;
+            cursor: pointer;
+            text-shadow: 0 0 10px #ff00ff;
+            box-shadow: 0 0 20px #ff00ff;
+            transition: all 0.3s ease;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        #startButton:hover, #restartButton:hover {
+            background: #ff00ff;
+            color: white;
+        }
+        #lives {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-family: 'Righteous', cursive;
+            font-size: 24px;
+            color: #ff00ff;
+            text-shadow: 0 0 10px #ff00ff;
+            z-index: 100;
+        }
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 20px #00ffff; }
+            50% { text-shadow: 0 0 40px #00ffff; }
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        #pauseScreen {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 51, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 50px;
+            z-index: 1000;
+        }
+        #pauseTitle {
+            font-family: 'Righteous', cursive;
+            font-size: 100px;
+            color: #00ffff;
+            text-shadow: 0 0 20px #00ffff;
+            animation: glow 2s ease-in-out infinite;
+        }
+        #logoImage {
+            width: 1200px;  /* Updated from 1600px to 1200px */
+            height: auto;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 20px #00ffff);
+            animation: glow 2s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <div id="welcomeScreen">
+        <img id="logoImage" src="logo.png" alt="Asteroids">
+        <button id="startButton">START GAME</button>
+    </div>
+    <div id="gameOverScreen">
+        <h1 id="gameOverTitle">GAME OVER</h1>
+        <h2 id="finalScore">SCORE: 0</h2>
+        <button id="restartButton">PLAY AGAIN</button>
+    </div>
+    <div id="pauseScreen" style="display: none;">
+        <h1 id="pauseTitle">PAUSED</h1>
+        <p style="color: #00ffff; font-family: 'Righteous', cursive; font-size: 24px;">Press ENTER to continue</p>
+    </div>
+    <div id="lives">LIVES: 3</div>
+    <canvas id="gameCanvas"></canvas>
+    <script src="game.js"></script>
+</body>
+</html> 
