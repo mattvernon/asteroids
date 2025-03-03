@@ -92,7 +92,7 @@
             justify-content: center;
             align-items: center;
             gap: 50px;
-            z-index: 1000;
+            z-index: 900;
         }
         #pauseTitle {
             font-family: 'Righteous', cursive;
@@ -159,6 +159,44 @@
         #startButton:focus, #restartButton:focus {
             outline: none;  /* Remove focus outline */
         }
+
+        #lives, #soundControls {
+            z-index: 1000;  /* Ensure HUD stays above pause screen */
+        }
+
+        #score {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-family: 'Righteous', cursive;
+            font-size: 24px;
+            color: #00ffff;
+            text-shadow: 0 0 10px #00ffff;
+            z-index: 1000;
+        }
+
+        #credit {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-family: 'Righteous', cursive;
+            font-size: 16px;
+            color: #00ffff;
+            text-shadow: 0 0 10px #00ffff;
+            z-index: 1000;
+        }
+
+        #credit a {
+            color: #ff00ff;
+            text-decoration: none;
+            text-shadow: 0 0 10px #ff00ff;
+            transition: all 0.3s ease;
+        }
+
+        #credit a:hover {
+            color: #ffff00;
+            text-shadow: 0 0 15px #ffff00;
+        }
     </style>
 </head>
 <body>
@@ -176,6 +214,7 @@
         <p style="color: #00ffff; font-family: 'Righteous', cursive; font-size: 24px;">Press ENTER to continue</p>
     </div>
     <div id="lives">LIVES: 3</div>
+    <div id="score">SCORE: 0</div>
     <div id="soundControls">
         <button class="soundButton" id="soundToggle" title="Toggle Sound">
             <svg viewBox="0 0 24 24">
@@ -183,6 +222,9 @@
             </svg>
             <span>SOUND ON</span>
         </button>
+    </div>
+    <div id="credit">
+        Built with AI by <a href="https://x.com/dApp_boi" target="_blank">@dApp_boi</a>
     </div>
     <canvas id="gameCanvas"></canvas>
     <script src="game.js"></script>
