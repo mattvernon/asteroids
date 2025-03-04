@@ -1140,21 +1140,9 @@ async function playRandomTrack() {
 
 // Make sure isMuted is defined at the top level
 let isMuted = false;
-let pauseMusic = new Audio('sounds/pause-music.mp3');
-pauseMusic.loop = true;
-
-document.addEventListener('DOMContentLoaded', () => {
-    const welcomeScreen = document.getElementById('welcomeScreen');
-    if (welcomeScreen && !isMuted) {
-        console.log('Starting pause music on welcome screen');
-        pauseMusic.play().catch(err => console.error('Pause music error:', err));
-    }
-});
 
 function initializeGame() {
     console.log('Stopping pause music, starting game music');
-    pauseMusic.pause();
-    pauseMusic.currentTime = 0;
     
     if (!isMuted) {
         backgroundMusic = new Audio('sounds/music.mp3');
@@ -1168,7 +1156,7 @@ function initializeGame() {
 // Play pause music when page loads (if not muted)
 window.addEventListener('load', () => {
     if (!isMuted) {
-        pauseMusic.play();
+        // pauseMusic.play();
     }
 });
 
@@ -1177,11 +1165,11 @@ function toggleMute() {
     isMuted = !isMuted;
     if (isMuted) {
         backgroundMusic?.pause();
-        pauseMusic?.pause();
+        // pauseMusic?.pause();
     } else {
         // Play appropriate music based on game state
         if (!gameStarted) {
-            pauseMusic.play();
+            // pauseMusic.play();
         } else if (!isPaused) {
             backgroundMusic.play();
         }

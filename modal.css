@@ -226,4 +226,111 @@
     font-family: 'Righteous', cursive;
     font-size: 16px;
     text-shadow: 0 0 5px #fff;
+}
+
+#starfield {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    overflow: hidden;
+    background: radial-gradient(ellipse at center, rgba(0,0,40,1) 0%, rgba(0,0,20,1) 100%);
+}
+
+@keyframes move-twinkle {
+    from {
+        transform: translateY(-100vh);
+    }
+    to {
+        transform: translateY(100vh);
+    }
+}
+
+.stars {
+    position: fixed;
+    width: 3px;
+    height: 3px;
+    background: white;
+    box-shadow: 
+        70vw 20vh 0 0 #fff,
+        30vw 25vh 0 0 #fff,
+        80vw 35vh 0 0 #fff,
+        20vw 45vh 0 0 #fff,
+        90vw 55vh 0 0 #fff,
+        10vw 65vh 0 0 #fff,
+        50vw 75vh 0 0 #fff,
+        85vw 85vh 0 0 #fff,
+        15vw 95vh 0 0 #fff,
+        45vw 5vh 0 0 #fff,
+        95vw 15vh 0 0 #fff,
+        5vw 25vh 0 0 #fff,
+        55vw 35vh 0 0 #fff,
+        75vw 45vh 0 0 #fff,
+        25vw 55vh 0 0 #fff,
+        65vw 65vh 0 0 #fff,
+        35vw 75vh 0 0 #fff,
+        85vw 85vh 0 0 #fff,
+        40vw 95vh 0 0 #fff;
+    animation: move-twinkle 20s linear infinite;
+}
+
+.stars2 {
+    position: fixed;
+    width: 2px;
+    height: 2px;
+    background: white;
+    box-shadow: 
+        65vw 15vh 0 0 #fff,
+        35vw 25vh 0 0 #fff,
+        75vw 35vh 0 0 #fff,
+        25vw 45vh 0 0 #fff,
+        85vw 55vh 0 0 #fff,
+        15vw 65vh 0 0 #fff,
+        45vw 75vh 0 0 #fff,
+        95vw 85vh 0 0 #fff,
+        5vw 95vh 0 0 #fff,
+        55vw 5vh 0 0 #fff,
+        85vw 15vh 0 0 #fff,
+        15vw 25vh 0 0 #fff,
+        65vw 35vh 0 0 #fff,
+        35vw 45vh 0 0 #fff,
+        75vw 55vh 0 0 #fff,
+        25vw 65vh 0 0 #fff,
+        55vw 75vh 0 0 #fff,
+        95vw 85vh 0 0 #fff;
+    animation: move-twinkle 30s linear infinite;
+}
+
+.stars3 {
+    position: fixed;
+    width: 1px;
+    height: 1px;
+    background: white;
+    box-shadow: 
+        60vw 10vh 0 0 #fff,
+        30vw 20vh 0 0 #fff,
+        80vw 30vh 0 0 #fff,
+        20vw 40vh 0 0 #fff,
+        70vw 50vh 0 0 #fff,
+        10vw 60vh 0 0 #fff,
+        50vw 70vh 0 0 #fff,
+        90vw 80vh 0 0 #fff,
+        40vw 90vh 0 0 #fff,
+        60vw 5vh 0 0 #fff,
+        90vw 10vh 0 0 #fff,
+        10vw 20vh 0 0 #fff,
+        50vw 30vh 0 0 #fff,
+        70vw 40vh 0 0 #fff,
+        30vw 50vh 0 0 #fff,
+        80vw 60vh 0 0 #fff,
+        20vw 70vh 0 0 #fff,
+        60vw 80vh 0 0 #fff;
+    animation: move-twinkle 40s linear infinite;
+}
+
+#welcomeScreen {
+    position: relative;
+    z-index: 2;
 } 
