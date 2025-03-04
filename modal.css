@@ -1,0 +1,128 @@
+#instructionsModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
+    z-index: 1000;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+#instructionsModal .modal-content {
+    position: relative;
+    background-color: black;
+    padding: 40px;
+    border: 3px solid #ff00ff;
+    border-radius: 15px;
+    max-width: 600px;
+    width: 90%;
+    box-shadow: 0 0 20px #ff00ff;
+}
+
+#instructionsModal h2 {
+    color: #ff00ff;
+    font-family: 'Righteous', cursive;
+    font-size: 32px;
+    text-align: center;
+    text-shadow: 0 0 10px #ff00ff;
+    margin-bottom: 30px;
+}
+
+#instructionsModal h3 {
+    color: #ff00ff;
+    font-family: 'Righteous', cursive;
+    font-size: 24px;
+    text-shadow: 0 0 10px #ff00ff;
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
+#instructionsModal .instructions-text p {
+    color: #ff00ff;
+    font-family: 'Righteous', cursive;
+    font-size: 18px;
+    line-height: 1.6;
+    margin: 10px 0;
+    text-shadow: 0 0 10px #ff00ff;
+}
+
+#closeInstructions {
+    display: block;
+    margin: 30px auto 0;
+    padding: 15px 30px;
+    background-color: transparent;
+    border: 3px solid #ff00ff;
+    color: #ff00ff;
+    font-family: 'Righteous', cursive;
+    font-size: 20px;
+    cursor: pointer;
+    text-shadow: 0 0 10px #ff00ff;
+    box-shadow: 0 0 15px #ff00ff;
+    border-radius: 30px;
+}
+
+#closeInstructions:hover {
+    background-color: #ff00ff;
+    color: black;
+    text-shadow: none;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    padding: 20px;
+}
+
+#startButton {
+    background-color: transparent;
+    border: 3px solid #ff00ff;
+    color: #ff00ff;
+    padding: 15px 30px;
+    font-family: 'Righteous', cursive;
+    font-size: 24px;
+    cursor: pointer;
+    text-shadow: 0 0 10px #ff00ff;
+    box-shadow: 0 0 15px #ff00ff;
+    border-radius: 30px;
+    width: 320px;
+    margin: 10px;
+    position: relative;
+    overflow: visible;
+    white-space: nowrap;
+}
+
+#instructionsButton {
+    background-color: transparent;
+    border: 3px solid #00ff00;
+    color: #00ff00;
+    padding: 15px 30px;
+    font-family: 'Righteous', cursive;
+    font-size: 24px;
+    cursor: pointer;
+    text-shadow: 0 0 10px #00ff00;
+    box-shadow: 0 0 15px #00ff00;
+    border-radius: 30px;
+    width: 320px;
+    margin: 10px;
+    position: relative;
+    overflow: visible;
+    white-space: nowrap;
+}
+
+#instructionsButton:hover {
+    background-color: #00ff00;
+    color: black;
+    text-shadow: none;
+}
+
+#welcomeScreen {
+    padding: 20px;
+    overflow: visible;
+} 

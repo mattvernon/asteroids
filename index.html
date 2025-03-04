@@ -8,6 +8,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="manifest" href="site.webmanifest">
     <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="modal.css">
     <style>
         * {
             margin: 0;
@@ -221,12 +222,115 @@
         #lives, #score, #soundControls, #credit {
             z-index: 1000;  /* Keep HUD above pause screen */
         }
+
+        #instructionsModal {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 51, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1001;
+        }
+
+        .modal {
+            background-color: rgba(0, 0, 0, 0.5);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1001;
+        }
+
+        .modal-content {
+            background-color: #000033;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .instructions-text {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .instructions-text h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .instructions-text p {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        #closeInstructions {
+            font-family: 'Righteous', cursive;
+            font-size: 20px;
+            color: #ff00ff;
+            background: transparent;
+            border: 2px solid #ff00ff;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            text-shadow: 0 0 10px #ff00ff;
+            box-shadow: 0 0 20px #ff00ff;
+            transition: all 0.3s ease;
+        }
+
+        #closeInstructions:hover {
+            background: #ff00ff;
+            color: white;
+        }
     </style>
 </head>
 <body>
-    <div id="welcomeScreen">
-        <img id="logoImage" src="logo.png" alt="Asteroids">
-        <button id="startButton">START GAME</button>
+    <div id="game-container">
+        <div id="welcomeScreen">
+            <img id="logoImage" src="logo.png" alt="Asteroids">
+            <div class="button-container">
+                <button id="startButton">START GAME</button>
+                <button id="instructionsButton">HOW TO PLAY</button>
+            </div>
+        </div>
+
+        <!-- Instructions Modal -->
+        <div id="instructionsModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <h2>How to Play</h2>
+                <div class="instructions-text">
+                    <h3>Controls</h3>
+                    <p>↑ or W: Thrust forward</p>
+                    <p>← or A: Rotate left</p>
+                    <p>→ or D: Rotate right</p>
+                    <p>SPACE: Fire</p>
+                    <p>P or ESC: Pause game</p>
+
+                    <h3>Gameplay</h3>
+                    <p>Destroy asteroids to earn points:</p>
+                    <p>• Large asteroids: 20 points</p>
+                    <p>• Medium asteroids: 50 points</p>
+                    <p>• Small asteroids: 100 points</p>
+
+                    <h3>Lives</h3>
+                    <p>You start with 3 lives. Avoid colliding with asteroids!</p>
+                </div>
+                <button id="closeInstructions">CLOSE</button>
+            </div>
+        </div>
     </div>
     <div id="gameOverScreen">
         <h1 id="gameOverTitle">GAME OVER</h1>

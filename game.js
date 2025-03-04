@@ -1097,12 +1097,112 @@ function loadSounds() {
     });
 }
 
-function initializeGame() {
-    // Remove the score display
-    const scoreElement = document.getElementById('points');
-    if (scoreElement) {
-        scoreElement.remove();
+// At the top level where audio is initialized
+let backgroundMusic;
+
+// Define audio sources at the top level
+const musicTracks = [
+    { src: 'sounds/music.mp3', audio: null },
+    { src: 'sounds/music2.mp3', audio: null },
+    { src: 'sounds/music3.mp3', audio: null }
+];
+
+// Store the last played track index to avoid repeats
+let lastPlayedTrackIndex = -1;
+
+async function playRandomTrack() {
+    if (backgroundMusic) {
+        backgroundMusic.pause();
+        backgroundMusic = null;
     }
     
-    // ... existing code ...
-} 
+    // Get a new random index, ensuring it's different from the last one
+    let randomIndex;
+    do {
+        randomIndex = Math.floor(Math.random() * musicTracks.length);
+    } while (randomIndex === lastPlayedTrackIndex && musicTracks.length > 1);
+    
+    lastPlayedTrackIndex = randomIndex;
+    
+    const trackSrc = `sounds/music${randomIndex === 0 ? '' : (randomIndex + 1)}.mp3`;
+    console.log('Playing track:', trackSrc);
+    
+    backgroundMusic = new Audio(trackSrc);
+    backgroundMusic.loop = true;
+    
+    try {
+        await backgroundMusic.play();
+        console.log('Successfully started playing:', trackSrc);
+    } catch (error) {
+        console.error('Play error:', error);
+    }
+}
+
+// Make sure isMuted is defined at the top level
+let isMuted = false;
+let pauseMusic = new Audio('sounds/pause-music.mp3');
+pauseMusic.loop = true;
+
+document.addEventListener('DOMContentLoaded', () => {
+    const welcomeScreen = document.getElementById('welcomeScreen');
+    if (welcomeScreen && !isMuted) {
+        console.log('Starting pause music on welcome screen');
+        pauseMusic.play().catch(err => console.error('Pause music error:', err));
+    }
+});
+
+function initializeGame() {
+    console.log('Stopping pause music, starting game music');
+    pauseMusic.pause();
+    pauseMusic.currentTime = 0;
+    
+    if (!isMuted) {
+        backgroundMusic = new Audio('sounds/music.mp3');
+        backgroundMusic.loop = true;
+        backgroundMusic.play().catch(err => console.error('Game music error:', err));
+    }
+    
+    // ... rest of initialization code ...
+}
+
+// Play pause music when page loads (if not muted)
+window.addEventListener('load', () => {
+    if (!isMuted) {
+        pauseMusic.play();
+    }
+});
+
+// Update mute toggle to handle both music tracks
+function toggleMute() {
+    isMuted = !isMuted;
+    if (isMuted) {
+        backgroundMusic?.pause();
+        pauseMusic?.pause();
+    } else {
+        // Play appropriate music based on game state
+        if (!gameStarted) {
+            pauseMusic.play();
+        } else if (!isPaused) {
+            backgroundMusic.play();
+        }
+    }
+    // ... existing mute toggle code ...
+}
+
+// Add modal control
+document.getElementById('instructionsButton').addEventListener('click', () => {
+    document.getElementById('instructionsModal').style.display = 'flex';
+});
+
+document.getElementById('closeInstructions').addEventListener('click', () => {
+    document.getElementById('instructionsModal').style.display = 'none';
+});
+
+// Close modal if clicking outside of it
+document.getElementById('instructionsModal').addEventListener('click', (e) => {
+    if (e.target.id === 'instructionsModal') {
+        document.getElementById('instructionsModal').style.display = 'none';
+    }
+});
+
+// ... existing code ... 
